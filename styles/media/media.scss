@@ -1,0 +1,389 @@
+@media (max-width: 700px){
+    .radio-page{
+       
+    }
+    .search-input__item {
+        padding: 15px 26px 15px 45px;
+        
+    }
+}
+@media (max-width:630px){
+    .search-input__item {
+        width: 236px;
+        
+    }
+    
+    .volume-bar{
+        display: none;
+    }
+ 
+}
+
+@media (max-width:415px)  {
+
+    //-------------------------------------- Media for ALL (header-content)  --------------------------------
+
+    .mob-hide{
+     display: block;
+
+     }
+    .search-input{
+
+     margin-top: 6px;
+ 
+    }
+     .search-input__item{
+        padding: 12px 6px 12px 25px;
+        width: 190px;
+        min-width: 100px;
+     }
+ 
+     .search-input::before{
+         content: "";
+         top: 10px;
+         left: 9px;
+         background-size: cover;
+         width: 12px;
+         height: 12px;
+     }
+
+
+ .content__header{
+     align-items: flex-start;
+ }
+
+ .mobile-logo{
+     display: block;
+ }
+ .mob-menu--On__btn{
+     display: flex;
+     margin-top: 8px;
+ }
+ .mob-menu--On__btn-item{
+     padding-right: 0;
+ }
+
+ .mobile--social-group{
+     display: flex;
+ }
+
+
+ //-------------------------------------- Media for Mob Menu   --------------------------------
+
+ .mob-menu{
+     display: block;
+ }
+ .mob-menu--visible{
+     visibility: visible;
+ }
+
+
+
+
+ //-------------------------------------- Media for radio page --------------------------------
+ .radio-page{
+
+     .names{
+         margin-top: 33px;
+     }
+     .volume-bar{
+         display: none;
+     }
+
+     .sidebar{
+         display: none;
+     }
+      .radio-social-group{
+         display: none;
+     }
+     .radio-content{
+         border-radius: 0 ;
+     }
+     .radio-content{
+         background-color: #FFFFFF;
+         .wrap{
+             padding:  20px 20px 40px 20px;
+         }
+     }
+     .progres{
+         border: 2px solid rgba(1, 92, 93, 0.05);
+         width: 366px;
+         border-radius: 50px;
+         position: relative;
+         margin-top:54px ;
+         background:rgba(1, 92, 93, 0.05);
+     }
+     .progres-value{
+         position: absolute;
+         width: 226px;
+         border-radius: 50px;
+         top: -2px;
+         left: -7px;
+         border: 2px solid  #3CD3AD;
+         background:#3CD3AD
+     }
+
+         .radio-social-group{
+             display: none;
+         }
+         
+ }
+
+
+ //--------------------------------------/ Media for radio page --------------------------------
+
+
+//-----!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Media for schedule page!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--------------   
+.main-page  {
+
+    .main-sidebar{
+        display: none;
+    }
+    .main-sidebar-right {
+       display: none;
+    }
+    .main-content{
+        max-height: 85.5vh;
+        border-radius: 0 0 30px 30px;
+        .styling-block{
+            left: 19px;
+        }   
+    }
+   
+
+    .center-content {
+        width: 100vw;
+        padding: 0 20px;
+    }
+
+     .center-content-header {
+        margin-top: 20px;
+    }
+    .mobile-efirs{
+        display: block;
+    }
+
+     .leading__block {
+      display: none;
+    }
+    .shchedule__block {
+        margin-top: 19px;
+        .title {
+                        /* Заголовок H2 */
+
+            font-family: SF Pro Rounded;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 24px;
+            /* identical to box height */
+
+            text-align: center;
+
+            color: #015C5D;
+            
+        }
+    }
+     .schedule-items {
+        grid-row-gap: 14px;
+        grid-column-gap: 35px;
+        padding: 0 8px;
+    }
+
+    .schedule-item {
+        width: 160px;
+        height: 199px;
+    }
+    .schedule-img__wrap {
+        width: 160px;
+        height: 160px;
+    }
+    .news-name{
+        font-size: 16px;
+        line-height: 19px;
+        margin-top: 7px;
+        margin-bottom: 5px;
+    }
+    .date-post{
+        display: none;
+    }
+    .schedule-item:not(:first-child) {
+        margin-left: 0;
+    }
+     .progres {
+        width: 374px;
+
+    }
+    .albom{
+        order: 1;
+        margin-top: -15px;
+    }
+    .player-buttons{
+        width: 90px;
+        justify-content: space-between;
+        order: 2;
+        margin-top: -15px;
+    }
+     .main-player__wrap {
+        flex-wrap: wrap;
+        padding: 0 19px;
+    }
+    .main-player {
+        height: 114px;
+    }
+    .volume {
+       display: none;
+    }
+    .play--btn{
+        display: none;
+    }
+    .albom-img__wrap {
+        width: 50px;
+        height: 50px;
+    }
+    .names{
+        margin-top: 7px;
+        .first{
+            margin-bottom: 13px;
+        }
+        .second{
+            margin-top: 0px;
+            margin-left: 6px;
+        }
+    }
+    .song-name{
+        font-size: 20px;
+    }
+    .order-desc{
+        display: none;
+    }
+    .order--center-content-page{
+        padding: 0 25px;
+        margin-top: 42px;
+        .title{
+                        /* Заголовок H2 */
+
+            font-family: SF Pro Rounded;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 24px;
+            /* identical to box height */
+
+
+            /* Headline text color */
+
+            color: #015C5D;
+        }
+    }
+ 
+    .order-input__item{
+
+        &::placeholder{
+           color: #8F8F8F;
+           /* SubSubTitle 1 */
+
+    
+        }
+
+        background: rgba(1, 92, 93, 0.05);
+        border-radius: 25px;
+
+
+
+      
+    }
+
+    .order-textarea{
+
+        padding: 15px;
+        &::placeholder{
+            color: #8F8F8F;
+        }
+
+    }
+    .order-btn__wrap{
+        margin-top: 38px;
+    }
+    .order-btn{
+        margin-right: 0;
+       
+    }
+       
+    
+   
+}
+
+
+}
+
+@media(max-width:400px){
+
+    // ------------------------------------------RADIO PAGE MEDIA STYLES -------------------------------------------------------
+    .radio-page{
+
+        .albom{
+
+            width: 310px;
+            height: 310px;
+        }
+
+        .progres{
+
+            width: 260px;
+
+        }
+
+        .albom-img__block {
+            left: 39px;
+            top: 40px;
+            width: 231px;
+            height: 231px;
+          
+        }
+
+    }
+
+    // ------------------------------------------/RADIO PAGE MEDIA STYLES -------------------------------------------------------
+
+
+
+    // ------------------------------------------MOB MENU MEDIA STYLES -------------------------------------------------------
+
+
+
+    .mob-menu{
+        
+    }
+
+     // ------------------------------------------/MOB MENU MEDIA STYLES -------------------------------------------------------
+    
+
+
+
+      // ------------------------------------------HEADER CONTERN MEDIA STYLES -------------------------------------------------------
+
+
+
+
+    .search-input__item {
+        width: 170px;
+    }
+    
+    
+    .search-input::before {
+        content: "";
+        top: 13px;
+        left: 9px;
+        background-size: cover;
+        width: 12px;
+        height: 12px;
+    }
+
+
+
+     // ------------------------------------------/MOB MENU MEDIA STYLES -------------------------------------------------------
+    
+    
+}
+// 

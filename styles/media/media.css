@@ -1,0 +1,308 @@
+@charset "UTF-8";
+@media (max-width: 700px) {
+  .search-input__item {
+    padding: 15px 26px 15px 45px;
+  }
+}
+
+@media (max-width: 630px) {
+  .search-input__item {
+    width: 236px;
+  }
+  .volume-bar {
+    display: none;
+  }
+}
+
+@media (max-width: 415px) {
+  .mob-hide {
+    display: block;
+  }
+  .search-input {
+    margin-top: 6px;
+  }
+  .search-input__item {
+    padding: 12px 6px 12px 25px;
+    width: 190px;
+    min-width: 100px;
+  }
+  .search-input::before {
+    content: "";
+    top: 10px;
+    left: 9px;
+    background-size: cover;
+    width: 12px;
+    height: 12px;
+  }
+  .content__header {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+  .mobile-logo {
+    display: block;
+  }
+  .mob-menu--On__btn {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 8px;
+  }
+  .mob-menu--On__btn-item {
+    padding-right: 0;
+  }
+  .mobile--social-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .mob-menu {
+    display: block;
+  }
+  .mob-menu--visible {
+    visibility: visible;
+  }
+  .radio-page .names {
+    margin-top: 33px;
+  }
+  .radio-page .volume-bar {
+    display: none;
+  }
+  .radio-page .sidebar {
+    display: none;
+  }
+  .radio-page .radio-social-group {
+    display: none;
+  }
+  .radio-page .radio-content {
+    border-radius: 0;
+  }
+  .radio-page .radio-content {
+    background-color: #FFFFFF;
+  }
+  .radio-page .radio-content .wrap {
+    padding: 20px 20px 40px 20px;
+  }
+  .radio-page .progres {
+    border: 2px solid rgba(1, 92, 93, 0.05);
+    width: 366px;
+    border-radius: 50px;
+    position: relative;
+    margin-top: 54px;
+    background: rgba(1, 92, 93, 0.05);
+  }
+  .radio-page .progres-value {
+    position: absolute;
+    width: 226px;
+    border-radius: 50px;
+    top: -2px;
+    left: -7px;
+    border: 2px solid  #3CD3AD;
+    background: #3CD3AD;
+  }
+  .radio-page .radio-social-group {
+    display: none;
+  }
+  .main-page .main-sidebar {
+    display: none;
+  }
+  .main-page .main-sidebar-right {
+    display: none;
+  }
+  .main-page .main-content {
+    max-height: 85.5vh;
+    border-radius: 0 0 30px 30px;
+  }
+  .main-page .main-content .styling-block {
+    left: 19px;
+  }
+  .main-page .center-content {
+    width: 100vw;
+    padding: 0 20px;
+  }
+  .main-page .center-content-header {
+    margin-top: 20px;
+  }
+  .main-page .mobile-efirs {
+    display: block;
+  }
+  .main-page .leading__block {
+    display: none;
+  }
+  .main-page .shchedule__block {
+    margin-top: 19px;
+  }
+  .main-page .shchedule__block .title {
+    /* Заголовок H2 */
+    font-family: SF Pro Rounded;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height */
+    text-align: center;
+    color: #015C5D;
+  }
+  .main-page .schedule-items {
+    grid-row-gap: 14px;
+    grid-column-gap: 35px;
+    padding: 0 8px;
+  }
+  .main-page .schedule-item {
+    width: 160px;
+    height: 199px;
+  }
+  .main-page .schedule-img__wrap {
+    width: 160px;
+    height: 160px;
+  }
+  .main-page .news-name {
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 7px;
+    margin-bottom: 5px;
+  }
+  .main-page .date-post {
+    display: none;
+  }
+  .main-page .schedule-item:not(:first-child) {
+    margin-left: 0;
+  }
+  .main-page .progres {
+    width: 374px;
+  }
+  .main-page .albom {
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+    margin-top: -15px;
+  }
+  .main-page .player-buttons {
+    width: 90px;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
+    margin-top: -15px;
+  }
+  .main-page .main-player__wrap {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    padding: 0 19px;
+  }
+  .main-page .main-player {
+    height: 114px;
+  }
+  .main-page .volume {
+    display: none;
+  }
+  .main-page .play--btn {
+    display: none;
+  }
+  .main-page .albom-img__wrap {
+    width: 50px;
+    height: 50px;
+  }
+  .main-page .names {
+    margin-top: 7px;
+  }
+  .main-page .names .first {
+    margin-bottom: 13px;
+  }
+  .main-page .names .second {
+    margin-top: 0px;
+    margin-left: 6px;
+  }
+  .main-page .song-name {
+    font-size: 20px;
+  }
+  .main-page .order-desc {
+    display: none;
+  }
+  .main-page .order--center-content-page {
+    padding: 0 25px;
+    margin-top: 42px;
+  }
+  .main-page .order--center-content-page .title {
+    /* Заголовок H2 */
+    font-family: SF Pro Rounded;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height */
+    /* Headline text color */
+    color: #015C5D;
+  }
+  .main-page .order-input__item {
+    background: rgba(1, 92, 93, 0.05);
+    border-radius: 25px;
+  }
+  .main-page .order-input__item::-webkit-input-placeholder {
+    color: #8F8F8F;
+    /* SubSubTitle 1 */
+  }
+  .main-page .order-input__item:-ms-input-placeholder {
+    color: #8F8F8F;
+    /* SubSubTitle 1 */
+  }
+  .main-page .order-input__item::-ms-input-placeholder {
+    color: #8F8F8F;
+    /* SubSubTitle 1 */
+  }
+  .main-page .order-input__item::placeholder {
+    color: #8F8F8F;
+    /* SubSubTitle 1 */
+  }
+  .main-page .order-textarea {
+    padding: 15px;
+  }
+  .main-page .order-textarea::-webkit-input-placeholder {
+    color: #8F8F8F;
+  }
+  .main-page .order-textarea:-ms-input-placeholder {
+    color: #8F8F8F;
+  }
+  .main-page .order-textarea::-ms-input-placeholder {
+    color: #8F8F8F;
+  }
+  .main-page .order-textarea::placeholder {
+    color: #8F8F8F;
+  }
+  .main-page .order-btn__wrap {
+    margin-top: 38px;
+  }
+  .main-page .order-btn {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .radio-page .albom {
+    width: 310px;
+    height: 310px;
+  }
+  .radio-page .progres {
+    width: 260px;
+  }
+  .radio-page .albom-img__block {
+    left: 39px;
+    top: 40px;
+    width: 231px;
+    height: 231px;
+  }
+  .search-input__item {
+    width: 170px;
+  }
+  .search-input::before {
+    content: "";
+    top: 13px;
+    left: 9px;
+    background-size: cover;
+    width: 12px;
+    height: 12px;
+  }
+}
+/*# sourceMappingURL=media.css.map */

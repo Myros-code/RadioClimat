@@ -1,0 +1,28 @@
+
+
+
+//-----------------------------------------COLORS--------------------------------------------------------------------------
+
+$bg-green-color: linear-gradient(180deg, #003D4D 0%, #00C996 100%);
+$icons-green-light-color:linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);
+$green-dark-color:#015C5D;
+$layout-green-color:#8F8F8F;
+$layout-white-color:#FFFFFF;
+$layout-rainbow-color: linear-gradient(358.17deg, #4CB8C4 6.64%, #3CD3AD 37.72%, #6EEC48 62.48%, #EF9327 93.1%);
+$logo-font-secondary:Rubik;
+$logo-font-primary:Belepotan;
+$primary-font:"SF Pro Rounded";
+
+//-----------------------------------------/COLORS--------------------------------------------------------------------------
+
+
+//-----------------------------------------MIXINS--------------------------------------------------------------------------
+
+
+//-----------------------------------------/MIXINS--------------------------------------------------------------------------
+
+%flex-sidebar{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
