@@ -1,0 +1,93 @@
+@import "../../all/all.scss";
+@import "../../mixins/mixins.scss";
+
+
+
+.main-page{
+    
+//         // ---------------------------------------- SCHEDULE RIGHT SIDEBAR STYLES START ---------------------------------------------------------
+
+        .main-sidebar-right{
+            overflow-x:hidden;
+            overflow-y: scroll;
+            width: 209px;
+            &::-webkit-scrollbar {
+                width: 0;
+              }
+           
+
+        }
+        .main-sidebar-right__wrap{
+           
+            width: 100%;
+            margin: 0 13px;
+            margin-top: 32px;
+        }
+        .sidebar--title{
+            /* Заголовок H2 */
+            font-family: SF Pro Rounded;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 24px;
+            text-align: left;
+            color: #015C5D;
+            /* identical to box height */
+        }
+        .efirs{
+            margin-top: 34px;
+
+        }
+        .efir-item{
+            max-width: 160px;
+            max-height: 199px;
+            &:not(:first-child){
+                margin-top: 10px;
+            }
+
+        }
+        .efir-item__link{
+            display: block;
+
+        }
+        .efir-item__figure{
+
+        }
+        .efir-img__wrap{
+            width: 160px;
+            height: 160px;
+            border-radius: 10px;
+            overflow: hidden;
+
+        }
+        .efir-img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+        }
+        .efir-info{
+
+        }
+        .efir-name{
+            margin: 0;
+            /* Заголовк H3 */
+
+            font-family: SF Pro Rounded;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+            /* identical to box height */
+
+
+            color: #015C5D;
+
+        }
+        .efir-post__date{
+
+        }
+        .time-post{
+
+        }
+}

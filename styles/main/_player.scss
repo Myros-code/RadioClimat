@@ -1,0 +1,188 @@
+@import "../mixins/mixins.scss";
+
+
+.main-page{
+
+        .main-player{
+        width: 100%;
+        position: absolute;
+        height: 100px;
+        bottom: 0; ////////////////////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! NE ZABUTI
+    }
+
+
+    
+
+//         // ---------------------------------------- SCHEDULE PLAYER STYLES START ---------------------------------------------------------
+
+
+        .main-player__wrap{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            padding: 0 32px;
+
+        }
+        .albom{
+            display: flex;
+            flex-direction: row;
+        }
+        .albom-img{
+
+        }
+        .albom-img__wrap{
+
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+
+        }
+        .albom-img__item{
+
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+        }
+        .names{
+            display: flex;
+            align-items: center;
+            margin-left: 16px;
+
+        }
+        .first{
+            display: flex;
+            flex-direction: column;
+            
+       
+        }
+        .group-name{
+            margin-bottom: 3px;
+            font-family: SF Pro Rounded;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 14px;
+            text-align: left;
+            
+            color: rgba(255, 255, 255, 0.5);
+
+        }
+        .albom-name{
+                            /* Albom name 1 */
+
+                font-family: SF Pro Rounded;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 19px;
+                /* identical to box height */
+
+                text-align: left;
+
+                color: rgba(255, 255, 255, 0.7);
+
+
+        }
+        .second{
+            display: flex;
+            margin-top: 10px;
+            margin-left: 17px;
+        }
+
+
+        .song-name{
+            /* song name 1 */
+
+            font-family: SF Pro Rounded;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 29px;
+            /* identical to box height */
+            
+            text-align: center;
+            
+            color: #FFFFFF;
+
+        }
+
+        .player-buttons{
+            margin-top: 5px;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+
+        }
+        .play--btn{
+            margin: 0 11px;
+
+        }
+        .progres{
+            margin-top: 17px;
+            border-radius: 50px;
+            width: 428px; 
+            height: 6px;
+            background-color: #3CD3AD;
+            position: relative;
+        }
+        .progres-value{
+            position: absolute;
+            border-radius: 50px;
+            width: 200px; 
+            height: 6px;
+            background-color: #ffffff;
+        }
+        .time{
+            font-family: SF Pro Rounded;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 14px;
+            text-align: center;
+
+            color: #FFFFFF;
+            position: absolute;
+
+        }
+        .current{
+            left: 0;
+            bottom: 7px;
+
+        }
+        .duration{
+            right: 0;
+            bottom: 7px;
+        }
+        .volume{
+            margin-top: 10px;
+            position: relative;
+            &::before{
+                content: "";
+                left: -41px;
+                bottom: 2px;
+                background-image:url("../src/new_images/volume-wh.svg") ;
+                width: 24px;
+                height: 20px;
+                position: absolute;
+                display: block;
+            }
+
+        }
+
+        .volume-item{
+            width: 176px;
+        }
+
+
+}
+
+//-----!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SCHEDULE STYLES END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--------------   
+
+
+

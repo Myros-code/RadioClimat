@@ -1,0 +1,137 @@
+.mob-menu{
+    display: none;
+    top: -800px;
+    position: absolute;
+    height: 90%;
+    width: 100vw;
+    background: #FFFFFF;
+    transition: 0.7s ease;
+}
+
+.mob-menu--active{
+    top: 83px;
+}
+.mob-menu__wrap{
+
+}
+.mob-menu__nav{
+    .wrapper{
+        margin: 0 auto;
+    }
+   
+    
+    .nav-item__wrap{
+        padding: 0 ;
+        margin-top: 46px;
+        &:first-child{
+            margin-top: 22px;
+        }
+        &:nth-child(5){
+            .nav__item-figcaption{
+                margin-left: 16px;
+            }
+            
+        }
+        
+    }
+    .mob-menu__nav--radio-img{
+        width: 48px;
+        height: 50px;
+
+    }
+    .mob-menu__nav--headphones-img{
+        width: 46px;
+        height: 46px;
+        
+    }
+    .mob-menu__nav--micro-img{
+        width: 44px;
+        height: 50.5px;
+        
+    }
+    .mob-menu__nav--list-img{
+        width: 44.3px;
+        height: 44.2px;
+        
+    }
+    .mob-menu__nav--climatfond-img{
+        width: 50px;
+        height: 56px;
+        
+    }
+    .mob-menu__nav--globus-img{
+        width: 44px;
+        height: 45.62px;
+    }
+
+}
+
+.mob-menu__nav-item{
+    display: flex;
+    justify-content: center;
+    .nav__item-figure{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        width: 212px;
+        margin-left: 53px;
+
+       
+
+    }
+    .nav__item-figcaption{
+        font-family: 'Proxima Nova Condensed';
+        margin-left: 22px;
+        margin-top: 0;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 24px;
+        color: #4CB8C4;
+
+       
+
+    }
+}
+
+.mobile--social-group{
+    margin-top: 94px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    .facebook__icon,.instagram__icon{
+        width: 40px;
+        height: 40px;
+
+    }
+
+    .youtube__icon{
+        width: 40px;
+        height: 28px;
+    }
+
+    .mobile--youtube__link{
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+    
+}
+
+button{
+    outline: none;
+    background-color: transparent;
+    border: none;
+}
+
+.mob-menu--On__btn{
+    display: none;
+    margin-top: 10px;
+}
+.mob-menu--On__btn-item{
+    display: flex;
+    align-items: center;
+}
+.mob-menu--on__img{
+
+}

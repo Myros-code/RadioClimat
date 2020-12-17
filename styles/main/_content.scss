@@ -1,0 +1,37 @@
+@import "./content/sidebar__left";
+@import "./content/sidebar__right";
+@import "./content/centered__block";
+
+
+.main-page{
+
+    .main-content{
+
+        overflow: hidden;
+        // height: 700px;
+        max-height: 87vh;
+        // width: 1440px;
+        background-color: #ffffff;
+        border-radius: 0 0 40px 40px;
+        // background: linear-gradient(180deg, #FFFFFF 52.7%, rgba(255, 255, 255, 0) 95.94%);
+        // transform: rotate(180deg);
+        display: flex;
+        // flex-wrap: nowrap;
+        position: relative;
+
+        .styling-block{
+            position: absolute;
+            width: 95%;
+            height: 31px;
+            bottom: -1px;
+            left: 36px;
+            // background-color: red;
+            background: linear-gradient(180deg, #FFFFFF 50.7%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(180deg);
+        }
+  
+    }
+
+
+
+}

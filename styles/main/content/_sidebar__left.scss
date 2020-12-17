@@ -1,0 +1,128 @@
+@import "../../all/all.scss";
+@import "../../mixins/mixins.scss";
+
+
+.main-page{
+
+    .main-sidebar{
+        padding: 0 32px;
+        width: 210px;
+        height: 100%;
+    }
+
+
+
+
+    .main-sidebar-nav{
+        margin-top: 54px;
+    }
+
+// // ---------------------------------------- MAIN SIDEBAR  STYLES START ---------------------------------------------------------
+    .sidebar-logo{
+        display: flex;
+        justify-content: flex-start;
+    }
+    
+    .logo__img{
+        margin-top: 40px;
+    }
+    
+    .logo__figcaption{
+        margin-top: -4px;
+        font-family: Belepotan;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        text-align: center;
+        color: #3CD3AD;
+    }
+
+    .sidebar-nav-item__wrap{
+        &:not(:first-child){
+            margin-top: 48px;
+        }
+        &:nth-child(4){
+            margin-top: 42px;
+        }
+        &:nth-child(5){
+            margin-top: 43px;
+        }
+        &:nth-child(6){
+            margin-top: 45px;
+        }
+        &:nth-child(7){
+            margin-top: 44px;
+        }
+    }
+
+    .sidebar-nav__item{
+        display: block;
+    }
+    .nav__item-figure{
+        display: flex;
+        align-items: center;
+     
+    }
+    .sidebar-icon{
+    
+    }
+    .nav__item-figcaption{
+        margin-left: 13px;
+        font-family: SF Pro Rounded;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+        color: #4CB8C4;
+    }
+
+    .main-social-group{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .social-group__link{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+        // ---------------------------------------- SOCIAL GROUP ICONS AND LINKS  STYLES START ---------------------------------------------------------
+        .sidebar--facebook__link{
+
+        }
+
+        .sidebar--youtube__link{
+            margin: 0 16px;
+            
+        }
+
+        .sidebar--instagram__link{
+            
+        }
+
+        .facebook__icon{
+            width: 24px;
+            height: 24px;
+
+        }
+
+        .youtube__icon{
+            width: 23px;
+            height: 16px;
+           
+
+        }
+
+        .instagram__icon{
+            width: 25px;
+            height: 24px;
+
+        }
+
+//         // ---------------------------------------- SOCIAL GROUP ICONS  STYLES END ---------------------------------------------------------
+//         // ---------------------------------------- SCHEDULE SIDEBAR  STYLES END ---------------------------------------------------------
+
+}

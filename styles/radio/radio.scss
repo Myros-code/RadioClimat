@@ -1,0 +1,12 @@
+@import "./content";
+@import "./sidebar";
+
+.radio-page{
+    background:$bg-green-color;
+    display: flex; 
+    flex-wrap: nowrap;
+    height: 100vh;
+}
+.radio-page__link{
+    display: block;
+}

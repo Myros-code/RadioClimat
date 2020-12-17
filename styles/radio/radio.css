@@ -1,0 +1,346 @@
+.radio-page .sidebar-logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.radio-page .radio-content {
+  background-color: #FFFFFF;
+  border-radius: 40px 0 0 40px;
+  width: 100%;
+}
+
+.radio-page .radio-content .wrap {
+  padding: 45px 32px 36px 53px;
+}
+
+.radio-page .radio-social-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.radio-page .social-group__link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.radio-page .header--youtube__link {
+  margin: 0 16px;
+}
+
+.radio-page .radio-content__player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 29px;
+}
+
+.radio-page .radio-content__player-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.radio-page .albom {
+  background-image: url("../../src/images/albom-cover.png");
+  background-size: cover;
+  width: 360px;
+  height: 360px;
+  position: relative;
+}
+
+.radio-page .albom-img__block {
+  left: 44px;
+  top: 44px;
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+  position: absolute;
+  overflow: hidden;
+}
+
+.radio-page .albom__img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.radio-page .volume-bar {
+  width: 33px;
+  position: relative;
+}
+
+.radio-page .volume-bar::after {
+  content: "";
+  top: 0;
+  left: 16px;
+  background-image: url("../src/images/volume-max.svg");
+  width: 24px;
+  height: 20px;
+  position: absolute;
+  display: block;
+  top: -205px;
+  left: -64px;
+}
+
+.radio-page .volume-bar::before {
+  content: "";
+  bottom: 0;
+  top: 174px;
+  background-image: url("../src/images/volume-min.svg");
+  width: 26.67px;
+  height: 20px;
+  position: absolute;
+  display: block;
+  left: -66px;
+}
+
+.radio-page .volume-empty__img {
+  top: -175px;
+  left: -70px;
+  position: absolute;
+}
+
+.radio-page .volume-full__img {
+  top: -159px;
+  left: -70px;
+  position: absolute;
+}
+
+.radio-page .progres {
+  border: 4px solid rgba(1, 92, 93, 0.05);
+  background-color: rgba(1, 92, 93, 0.05);
+  width: 67%;
+  border-radius: 50px;
+  position: relative;
+  margin-top: 60px;
+}
+
+.radio-page .progres-value {
+  position: absolute;
+  width: 60%;
+  border-radius: 50px;
+  top: -4px;
+  left: -7px;
+  background-color: #3CD3AD;
+  border: 4px solid  #3CD3AD;
+}
+
+.radio-page .time {
+  position: absolute;
+  font-family: "SF Pro Rounded";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #015C5D;
+}
+
+.radio-page .current {
+  left: -5px;
+  bottom: 5px;
+}
+
+.radio-page .duration {
+  right: 0;
+  bottom: 5px;
+}
+
+.radio-page .names {
+  margin-top: 28px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.radio-page .group-name {
+  font-family: "SF Pro Rounded";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #8F8F8F;
+}
+
+.radio-page .song-name {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  color: #000000;
+  margin-top: 6px;
+}
+
+.radio-page .albom-name {
+  font-family: "SF Pro Rounded";
+  font-family: "SF Pro Rounded";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #595959;
+  margin-top: 6px;
+}
+
+.radio-page .player-buttons {
+  margin-top: 33px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.radio-page .play--btn {
+  margin: 0 20px;
+}
+
+.radio-page .sidebar-logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.radio-page .radio-sidebar {
+  width: 108px;
+  height: 100%;
+}
+
+.radio-page .logo__img {
+  margin-top: 40px;
+}
+
+.radio-page .logo__figcaption {
+  font-family: Rubik;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #FFFFFF;
+  margin-top: -3px;
+}
+
+.radio-page .sidebar-nav {
+  margin-top: 115px;
+}
+
+.radio-page .sidebar-nav-item__wrap {
+  padding: 13px;
+}
+
+.radio-page .translate__wrap {
+  margin-top: 175px;
+  padding: 13px;
+}
+
+.radio-page .sidebar-nav__item {
+  display: block;
+}
+
+.radio-page .nav__item-figure, .radio-page .translate__link-figure {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.radio-page .nav__item-figcaption {
+  margin-top: 3px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.radio-page .translate__link-figcaption {
+  margin-top: 3px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.radio-page {
+  background: -webkit-gradient(linear, left top, left bottom, from(#003D4D), to(#00C996));
+  background: linear-gradient(180deg, #003D4D 0%, #00C996 100%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  height: 100vh;
+}
+
+.radio-page__link {
+  display: block;
+}
+/*# sourceMappingURL=radio.css.map */
