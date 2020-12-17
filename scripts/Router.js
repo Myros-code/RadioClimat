@@ -1636,7 +1636,7 @@ const centerContentBody = document.querySelector('.center-content-body');
             // audioImg.src = `./audio/${track}.jpg`
             // audioHeader.textContent = track.toUpperCase();
             // audioPlayer.src = `./audio/${track}.mp3`
-            audioPlayer.src = "http://xn--80aalqalhjoq5a.xn--p1ai:8000/stream";
+            audioPlayer.src = "https://xn--80aalqalhjoq5a.xn--p1ai:8000/stream";
             // audioPlayer.play();
             // if (isPlayed){
             //     audioPlayer.play();
