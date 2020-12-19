@@ -54,9 +54,16 @@ class RadioClimat {
 
     getServerChanels = () =>{return this.getData(`${this.SERVER}/api/v2/channels/?server=1 `);}
     
-    getEfirHistory = () =>{return this.getData(`${this.SERVER}/api/v2/history/?limit=10&offset=0&server=1 `);}
+    getEfirHistory = () =>{return this.getData(`${this.SERVER}/api/v2/history/`);}
 
-    getTracks = () =>{return this.getData(`${this.SERVER}/api/v2/playlist_tracks/`);}
+    getDjs = () =>{return this.getData(`${this.SERVER}/api/djs`);}
+
+
+    getTrack = () =>{return this.getData(`${this.SERVER}/api/v2/music/49`);}
+
+
+
+    // let url = `${this.apiBase}/music/${this.lastTrack.all_music_id}/`;
 
 
 
@@ -67,7 +74,31 @@ class RadioClimat {
 
 const radioClimat = new RadioClimat();
 
+
+radioClimat.getEfirHistory().then((response) => CreateEfir(response));
+
+radioClimat.getTrack().then((response) => getTrackData(response));
+
+
+const CreateEfir = (response) => {
+    console.log(response);
+    const currentTrackNum = 0;
+    const currentTrackData = response[currentTrackNum];
+    console.log(currentTrackData);
+
+    currentTrackID = response[currentTrackNum].all_music_id;
+    console.log(currentTrackID);
+}
+
+
+
+const getTrackData = (response) => {
+    console.log(response);
+
+}
+
 console.log(radioClimat.getServers());
 console.log(radioClimat.getServerChanels());
 console.log(radioClimat.getEfirHistory());
-console.log(radioClimat.getTracks());
+console.log(radioClimat.getDjs());
+console.log(radioClimat.getTrack());

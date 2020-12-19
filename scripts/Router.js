@@ -2,6 +2,8 @@
 
 const app = document.querySelector(".app");
 const centerContentBody = document.querySelector('.center-content-body');
+const audioPlayer = document.querySelector('#audioPlayer');
+audioPlayer.src = "http://xn--80aalqalhjoq5a.xn--p1ai:8000/stream";
 
  let shchedule = `
  <div class="center-content-page schedule--center-content-page" >
@@ -471,6 +473,7 @@ const centerContentBody = document.querySelector('.center-content-body');
 
 </div>`;
 
+
  let order = `
  <div class="center-content-page order--center-content-page">
  <h1 class="title block--title">Заказать песню</h1>
@@ -634,7 +637,7 @@ const centerContentBody = document.querySelector('.center-content-body');
              </header>
 
          <div class="radio-content__player">
-            <audio class="audio-player" id = "audioPlayer" src=""></audio>
+         
 
              <div class="radio-content__player-title">
 
@@ -1537,6 +1540,281 @@ const centerContentBody = document.querySelector('.center-content-body');
 
 </div>`;
 
+
+class RadioClimat {
+
+    constructor (){
+        this.SERVER = 'http://xn--80aalqalhjoq5a.xn--p1ai:8080/';
+        // this.API_KEY = 'd1aa4cc43434aa21dae36425fec7828f';
+    }
+
+
+    data = () => {
+        return {
+            translations: {
+                en: {
+                    already_voted: "You have already voted for this track",
+                    likes: "Likes",
+                    dislikes: "Dislikes",
+                },
+                ru: {
+                    already_voted: "Вы уже голосовали за этот трэк",
+                    likes: "За",
+                    dislikes: "Против",
+                },
+                fr:{
+                    already_voted: "Vous avez déjà voté pour ce titre",
+                    likes: "J'Aime",
+                    dislikes: "J'Aime pas",
+                }
+            },
+            loaded: true,
+            trackImage: '',
+            trackImageFailover: '',
+            trackMetadata: '',
+            showProgress: false,
+            playbackTime: '',
+            pbbStyle: {
+                left: '0px',
+            },
+            voteResultNeg: {
+                color: null,
+                'font-size': '12px',
+                'line-height': '50px',
+            },
+            voteResultPos: {
+                color: null,
+                'font-size': '12px',
+                'line-height': '50px',
+            },
+            totalTrackTime: '',
+            // Voting
+            canVote: false,
+            trackLikes: 0,
+            trackDislikes: 0,
+            voteRowHeight: 50,
+            styleObject: {
+            }
+
+        } 
+        
+    }
+
+    getData = async (url) => {
+        
+        const res = await fetch(url);
+        if (res.ok) {
+            return res.json();
+        } else {
+            throw new Error(`Не удалось получить данные по адресу ${url}`);
+        }
+    }
+
+    
+    getServers = () =>{return this.getData(`${this.SERVER}api/v2/servers/`);}
+
+    getServerChanels = () =>{return this.getData(`${this.SERVER}/api/v2/channels/?server=1`);}
+
+    getCurrent = () => {return this.getData(`${this.SERVER}api/v2/history/?limit=1&offset=0&server=1`);}
+
+   
+    
+    getEfirHistory = () =>{return this.getData(`${this.SERVER}/api/v2/history/`);}
+
+    getDjs = () =>{return this.getData(`${this.SERVER}/api/djs`);}
+
+    getTrack = (id) =>{return this.getData(`${this.SERVER}api/v2/music/${id}`);}
+
+
+
+    refreshTrackdata = () =>{
+        this.getData(`${this.SERVER}api/v2/history/?limit=1&offset=0&server=1`)
+            .then(response => {
+                if (response.data && response.data.results && response.data.results.length) {
+                    this.lastTrack = response.data.results[0];
+                    this.loaded = true;
+                    this.trackImage = (this.lastTrack.img_medium_url || this.lastTrack.img_url || this.trackImageFailover);
+                    // Track changed
+                    if (this.trackMetadata != this.lastTrack.metadata) {
+                        this.trackMetadata = this.lastTrack.metadata;
+                        this.trackLikes = this.trackDislikes = 0;
+                    }
+                    this.canVote = this.lastTrack.all_music_id;
+
+                }
+
+            })
+            .catch(e => {
+                this.loaded = false;
+                this.canVote = false;
+            });
+
+            
+        //
+    }
+
+    
+    formatTime = (sec) => {
+        let pad = function(n) {
+            return (n < 10 ? "0" + n : n);
+        };
+        sec = parseInt(sec);
+        let h = Math.floor(sec / 3600),
+            m = Math.floor((sec / 3600) % 1 * 60),
+            s = sec % 60;
+        if (h > 0) {
+            return pad(h) + ":" + pad(m) + ":" + pad(s);
+        }
+        else {
+            return pad(m) + ":" + pad(s);
+        }
+    }
+    
+   
+    // let url = `${this.apiBase}/music/${this.lastTrack.all_music_id}/`;
+    
+}
+
+
+
+
+const radioClimat = new RadioClimat();
+
+// console.log(radioClimat.getServers());
+//     console.log(radioClimat.getServerChanels());
+//     console.log(radioClimat.getEfirHistory());
+//     console.log(radioClimat.getDjs());
+// console.log(radioClimat.getTrack(156));
+
+// console.log(radioClimat.getCurrent());
+
+// setInterval(radioClimat.getEfirHistory().then((response) => CreateEfir(response)), 100);
+
+
+setInterval(() => {
+    radioClimat.getEfirHistory().then((response) => CreateEfir(response));
+}, 1000);
+
+// radioClimat.getEfirHistory().then((response) => CreateEfir(response));
+// radioClimat.getTrack().then((response) => getTrackData(response));
+
+
+const CreateEfir = (response) => {
+
+    // console.log(response);
+    const currentTrackNum = 0;
+    const currentTrackData = response[currentTrackNum];
+    // console.log(currentTrackData);
+    currentTrackID = response[currentTrackNum].all_music_id;
+    // console.log(currentTrackID);
+    // return currentTrackID;
+    group = response[currentTrackNum].playlist_title;
+
+    radioClimat.getTrack(currentTrackID).then((response) => {
+        console.log(response);
+        console.log(currentTrackID);
+        let songName = response.title;//songName
+        let albumName = response.album;
+        let groupName = group;
+        console.log(songName);
+        console.log(albumName);
+        console.log(groupName);
+
+        let duration = response.length;
+
+        Player.setSongNames(songName, groupName, albumName);
+        
+
+
+        // console.log(response.title);
+        // console.log(response.atime);
+        // console.log(response.album);
+        // console.log(group);
+        // let trackNames = myString.split(',', 3); 
+    });
+
+
+    // if (response[currentTrackNum] && response[currentTrackNum].ts && response[currentTrackNum].length) {
+    //     radioClimat.showProgress = true;
+        
+    //     let timeFromStart = (+ new Date()) - response[currentTrackNum].ts;
+    //     if (timeFromStart > this.lastTrack.length) {
+    //         timeFromStart = response[currentTrackNum].length;
+    //     }
+
+    //     radioClimat.playbackTime = radioClimat.formatTime(timeFromStart / 1000);
+    //     radioClimat.totalTrackTime = radioClimat.formatTime(this.lastTrack.length / 1000);
+
+    //     this.playingProgress = (timeFromStart / this.lastTrack.length) * 100;
+    //     if (this.playingProgress >= 100) {
+    //         this.refreshTrackdata();
+    //     }
+    // }
+
+   
+    let timeFromStart = (+ new Date()) - response[currentTrackNum].ts;
+    if (timeFromStart > response[currentTrackNum].length) {
+        timeFromStart = response[currentTrackNum].length;
+        console.log(timeFromStart);
+    }
+    console.log(timeFromStart);
+
+    let playbackTime = radioClimat.formatTime(timeFromStart / 1000);
+
+    console.log(playbackTime);
+    let totalTrackTime = radioClimat.formatTime(response[currentTrackNum].length / 1000);
+    console.log(totalTrackTime);
+
+    Player.setProgress(playbackTime, totalTrackTime);
+
+    let playingProgress = (timeFromStart / response[currentTrackNum].length) * 100;
+        if (playingProgress >= 100) {
+            radioClimat.refreshTrackdata();
+        }
+    console.log(playingProgress);
+
+    
+        let progressWrap = document.querySelector('.progres');
+        let audioProgressTiming = document.querySelector('#audioProgress');//
+        if (!progressWrap) {
+            return;
+        }
+
+        let progressWidth = progressWrap.offsetWidth;
+        console.log(progressWidth);
+        let barWidth = 100 - playingProgress;
+        let pixWidth = progressWidth * (barWidth / 100.);
+        let trackProgress = progressWidth - pixWidth;
+
+        audioProgressTiming.style.width = `${trackProgress}px`;
+
+}
+
+
+
+
+
+
+
+
+// const getTrackData = (response) => {
+//     console.log(response);
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  // `класс` роутера
  let Router = {
 
@@ -1549,7 +1827,6 @@ const centerContentBody = document.querySelector('.center-content-body');
         "/main/feeds/": "main_feeds",
         "/main/schedule": "main_shchedule",
         "/main/podcasts/": "main_podcasts",
-        
     },
 
     mobMenuInit: function(){
@@ -1618,97 +1895,6 @@ const centerContentBody = document.querySelector('.center-content-body');
     },
 
 
-
-    radioInit: function(){
-        const audioImg = document.querySelector('#audioImg');//
-        const audioPlayer = document.querySelector('#audioPlayer');
-        const audioButtonPlay = document.querySelector('#audioButtonPlay');//
-        const audioButtonPlayImg = document.querySelector('.play--btn__icon');
-        const audioProgressTiming = document.querySelector('#audioProgress');//
-        const audioTimePassed =  document.querySelector('#currentTime');//
-        const audioTimeTotal =  document.querySelector('#durationTime');//
-
-        const loadTrack = () => {
-
-            addZero = n => n < 10 ? '0' + n : n;
-           
-            // const track = playlist[trackIndex];
-            // audioImg.src = `./audio/${track}.jpg`
-            // audioHeader.textContent = track.toUpperCase();
-            // audioPlayer.src = `./audio/${track}.mp3`
-            audioPlayer.src = "http://xn--80aalqalhjoq5a.xn--p1ai:8000/stream";
-            // audioPlayer.play();
-            // if (isPlayed){
-            //     audioPlayer.play();
-            // } else {
-            //     audioPlayer.pause();
-            // }
-            audioButtonPlay.addEventListener('click', () =>{
-                const isPlayed = audioPlayer.paused;
-                 if (isPlayed){
-                audioPlayer.play();
-                audioButtonPlayImg.src = './src/images/pause.svg';
-            } else {
-                audioPlayer.pause();
-                audioButtonPlayImg.src = './src/images/play-lg.svg';
-            }
-
-           
-
-        
-           
-
-            console.log('click');
-            });
-
-            
-        };
-
-        audioPlayer.addEventListener('timeupdate', () => {
-            const duration = audioPlayer.duration;
-            console.log(duration);
-            const currentTime = audioPlayer.currentTime;
-            console.log(currentTime);
-            const progress = (currentTime / duration) * 100;
-            console.log(progress);
-    
-            audioProgressTiming.style.width = progress + '%';
-    
-            const minutesPassed = Math.floor(currentTime / 60) || '0';
-            const secondsPassed = Math.floor(currentTime % 60) || '0';
-    
-            const minutesTotal = Math.floor(duration / 60) || '0';
-            const secondsTotal = Math.floor(currentTime % 60) || '0';
-    
-            audioTimePassed.textContent = `${addZero(minutesPassed)}:${addZero(secondsPassed)}`;
-            audioTimeTotal.textContent = `${addZero(minutesTotal)}:${addZero(secondsTotal)}`;
-    
-        });
-
-
-         audioProgress.addEventListener('click', event => {
-               const x = event.offsetX; 
-               const allWidth = audioProgress.clientWidth;
-               const progress = (x / allWidth) * audioPlayer.duration;
-               audioPlayer.currentTime = progress;
-        
-            });
-    
-
-        loadTrack();
-        
-    },
-
-
-   
-
-
-
-
-
-
-
-
     // метод проходиться по массиву routes и создает
     // создает объект на каждый маршрут
     init: function() {
@@ -1771,8 +1957,9 @@ const centerContentBody = document.querySelector('.center-content-body');
         this.init();
         this.replay();
         this.mobMenuInit();
-        this.radioInit();
-      
+        console.log(Player.radioPlay);
+        Player.radioPlay();
+
     },
 
 
@@ -1817,4 +2004,290 @@ const centerContentBody = document.querySelector('.center-content-body');
 
     },
 
-}
+};
+
+
+let Player = {
+
+
+
+
+    initElem: function(){
+        // const audioImg = document.querySelector('#audioImg');//
+       
+        // const audioButtonPlay = document.querySelector('#audioButtonPlay');//
+        // const audioButtonPlayImg = document.querySelector('.play--btn__icon');
+        // const audioProgressTiming = document.querySelector('#audioProgress');//
+        // const audioTimePassed =  document.querySelector('#currentTime');//
+        // const audioTimeTotal =  document.querySelector('#durationTime');//
+    },
+
+    setSongNames: function(songName,groupName,albumName){
+
+        const songNameField = document.querySelector('#songName');
+        const groupNameField = document.querySelector('#groupName');
+        const albumNameField = document.querySelector('#albomName');
+
+        songNameField.textContent = songName;
+        groupNameField.textContent = groupName;
+        albumNameField.textContent = albumName;
+
+    },
+
+    setProgress: function(passed, total){
+
+        const audioTimePassed =  document.querySelector('#currentTime');//
+        const audioTimeTotal =  document.querySelector('#durationTime');//
+
+        audioTimePassed.textContent = passed;
+        audioTimeTotal.textContent = total;
+    
+
+
+        // audioPlayer.addEventListener('timeupdate', () => {
+
+        //     addZero = n => n < 10 ? '0' + n : n;
+
+        //     const duration = audioPlayer.duration;
+        //     const currentTime = audioPlayer.currentTime;
+        //     const progress = (currentTime / duration) * 100;
+    
+        //     audioProgressTiming.style.width = progress + '%';
+    
+        //     const minutesPassed = Math.floor(currentTime / 60) || '0';
+        //     const secondsPassed = Math.floor(currentTime % 60) || '0';
+    
+        //     const minutesTotal = Math.floor(duration / 60) || '0';
+        //     const secondsTotal = Math.floor(currentTime % 60) || '0';
+    
+        //     audioTimePassed.textContent = `${addZero(minutesPassed)}:${addZero(secondsPassed)}`;
+        //     audioTimeTotal.textContent = `${addZero(minutesTotal)}:${addZero(secondsTotal)}`;
+
+    
+        // });
+
+    },
+
+
+    // updateProgress: function () {
+    //     if (this.lastTrack && this.lastTrack.ts && this.lastTrack.length) {
+    //         this.showProgress = true;
+    //         let timeFromStart = (+ new Date()) - this.lastTrack.ts;
+    //         if (timeFromStart > this.lastTrack.length) {
+    //             timeFromStart = this.lastTrack.length;
+    //         }
+    //         this.playbackTime = this.formatTime(timeFromStart / 1000);
+    //         this.totalTrackTime = this.formatTime(this.lastTrack.length / 1000);
+    //         this.playingProgress = (timeFromStart / this.lastTrack.length) * 100;
+    //         if (this.playingProgress >= 100) {
+    //             this.refreshTrackdata();
+    //         }
+    //     }
+    //     else {
+    //         this.showProgress = false;
+    //     }
+    //     // Update UI
+    //     let progressWrap = document.getElementsByClassName('progres');
+    //     let progressWalue = document.querySelector('#audioProgress');
+    //     if (!progressWrap) {
+    //         return;
+    //     }
+    //     let progressWidth = progressWrap.offsetWidth;
+    //     let barWidth = 100 - this.playingProgress;
+    //     let pixWidth = progressWidth * (barWidth / 100.);
+    //     this.trackProgress = progressWidth - pixWidth;
+    //     progressWalue.style.width = `${this.trackProgress}px`;
+    // },
+
+
+
+    radioPlay: function(){
+        
+        const audioButtonPlayImg = document.querySelector('.play--btn__icon');
+        const audioButtonPlay = document.querySelector('#audioButtonPlay');//
+        const audioProgressTiming = document.querySelector('#audioProgress');//
+        const audioTimePassed =  document.querySelector('#currentTime');
+        const audioTimeTotal =  document.querySelector('#durationTime');
+       
+
+        audioButtonPlay.addEventListener('click', () =>{
+
+            radioClimat.refreshTrackdata();
+
+            const isPlayed = audioPlayer.paused;
+
+            if (isPlayed){
+            
+            audioPlayer.play();
+            audioButtonPlayImg.src = './src/images/pause.svg';
+
+            } else {
+
+            audioPlayer.pause();
+            audioButtonPlayImg.src = './src/images/play-lg.svg';
+
+            }
+
+            // this.radioPlay();
+            
+            console.log('click');
+        });
+
+        
+
+
+        // audioPlayer.addEventListener('timeupdate', () => {
+            
+        //     // radioClimat.refreshTrackdata();
+        //     // this.updateProgress();
+        //     // const duration = audioPlayer.duration;
+        //     // console.log(duration);
+        //     // const currentTime = audioPlayer.currentTime;
+        //     // console.log(currentTime);
+        //     // const progress = (currentTime / duration) * 100;
+        //     // console.log(progress);
+    
+        //     // audioProgressTiming.style.width = progress + '%';
+    
+        //     // const minutesPassed = Math.floor(currentTime / 60) || '0';
+        //     // const secondsPassed = Math.floor(currentTime % 60) || '0';
+    
+        //     // const minutesTotal = Math.floor(duration / 60) || '0';
+        //     // const secondsTotal = Math.floor(currentTime % 60) || '0';
+    
+        //     // audioTimePassed.textContent = `${addZero(minutesPassed)}:${addZero(secondsPassed)}`;
+        //     // audioTimeTotal.textContent = `${addZero(minutesTotal)}:${addZero(secondsTotal)}`;
+    
+        // });
+
+
+       
+
+
+
+
+        
+    },
+
+
+    radioInit: function(){
+        // const audioImg = document.querySelector('#audioImg');//
+        // // const audioPlayer = document.querySelector('#audioPlayer');
+        // // console.log(audioPlayer);
+        // const audioButtonPlay = document.querySelector('#audioButtonPlay');//
+        // const audioButtonPlayImg = document.querySelector('.play--btn__icon');
+        // const audioProgressTiming = document.querySelector('#audioProgress');//
+        // const audioTimePassed =  document.querySelector('#currentTime');//
+        // const audioTimeTotal =  document.querySelector('#durationTime');//
+        
+
+        // const loadTrack = () => {
+
+        //     addZero = n => n < 10 ? '0' + n : n;
+           
+        //     // const track = playlist[trackIndex];
+        //     // audioImg.src = `./audio/${track}.jpg`
+        //     // audioHeader.textContent = track.toUpperCase();
+        //     // audioPlayer.src = `./audio/${track}.mp3`
+
+
+        //     audioPlayer.src = "http://xn--80aalqalhjoq5a.xn--p1ai:8000/stream";
+        //     // audioPlayer.play(); 
+        //     // if (isPlayed){
+        //     //     audioPlayer.play();
+        //     // } else {
+        //     //     audioPlayer.pause();
+        //     // }
+
+
+        //     // audioButtonPlay.addEventListener('click', () =>{
+        //     //     this.radioPlay();
+        //     //     console.log('click');
+        //     // });
+
+            
+        // };
+
+        // audioPlayer.addEventListener('timeupdate', () => {
+        //     const duration = audioPlayer.duration;
+        //     console.log(duration);
+        //     const currentTime = audioPlayer.currentTime;
+        //     console.log(currentTime);
+        //     const progress = (currentTime / duration) * 100;
+        //     console.log(progress);
+    
+        //     audioProgressTiming.style.width = progress + '%';
+    
+        //     const minutesPassed = Math.floor(currentTime / 60) || '0';
+        //     const secondsPassed = Math.floor(currentTime % 60) || '0';
+    
+        //     const minutesTotal = Math.floor(duration / 60) || '0';
+        //     const secondsTotal = Math.floor(currentTime % 60) || '0';
+    
+        //     audioTimePassed.textContent = `${addZero(minutesPassed)}:${addZero(secondsPassed)}`;
+        //     audioTimeTotal.textContent = `${addZero(minutesTotal)}:${addZero(secondsTotal)}`;
+    
+        // });
+
+
+        // audioProgress.addEventListener('click', event => {
+        //        const x = event.offsetX; 
+        //        const allWidth = audioProgress.clientWidth;
+        //        const progress = (x / allWidth) * audioPlayer.duration;
+        //        audioPlayer.currentTime = progress;
+        
+        // });
+    
+
+        // loadTrack();
+        
+    },
+
+
+    // updateProgress: function() {
+
+    //     if (this.lastTrack && this.lastTrack.ts && this.lastTrack.length) {
+    //         this.showProgress = true;
+    //         let timeFromStart = (+ new Date()) - this.lastTrack.ts;
+    //         if (timeFromStart > this.lastTrack.length) {
+    //             timeFromStart = this.lastTrack.length;
+    //         }
+    //         this.playbackTime = this.formatTime(timeFromStart / 1000);
+    //         this.totalTrackTime = this.formatTime(this.lastTrack.length / 1000);
+    //         this.playingProgress = (timeFromStart / this.lastTrack.length) * 100;
+
+    //         if (this.playingProgress >= 100) {
+    //             this.refreshTrackdata();
+    //         }
+
+    //     }
+
+    //     else {
+    //         this.showProgress = false;
+    //     }
+
+    //     // Update UI
+    //     let progressWrap = document.getElementById('trackProgressWrap');
+    //     if (!progressWrap) {
+    //         return;
+    //     }
+    //     let progressWidth = progressWrap.offsetWidth;
+    //     let barWidth = 100 - this.playingProgress;
+    //     let pixWidth = progressWidth * (barWidth / 100.);
+    //     this.trackProgress = progressWidth - pixWidth;
+    //     this.pbbStyle.left = `${this.trackProgress}px`;
+    // },
+
+
+
+};
+
+
+// radioClimat.refreshTrackdata();
+radioClimat.data();
+
+
+
+// console.log(radioClimat.lastTrack);
+// console.log(radioClimat.trackImage);
+console.log(radioClimat.data);

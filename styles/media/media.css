@@ -306,7 +306,7 @@
   }
 }
 
-@media (max-height: 768px) {
+@media (height: 768px) {
   .radio-page .translate__wrap {
     margin-top: 130px;
   }
