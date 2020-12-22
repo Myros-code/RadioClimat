@@ -18,13 +18,16 @@ class RadioClimat {
         return `${date.getFullYear()}-${+date.getMonth()+1}-${date.getDate()}`;
     }
 
-    dataObj = {};
+    dataObj = {
+      
+
+    };
+
+
 
     dataPlayLists = {};
 
     data = (response) => {
-
-        console.log(response);
         let data = response.results[0];
         let timeFromStart = (+new Date()) - data.ts;
         let duration = data.length;
@@ -32,26 +35,90 @@ class RadioClimat {
             data,
             timeFromStart,
             songName: data.title,
+            lastTrackId : data.id,
+            lastTrackAll_music_id : data.all_music_id,
             groupName: data.playlist_title,
             img_url: data.img_large_url,
             duration,
-            playbackTime: radioClimat.formatTime(timeFromStart / 1000),
+            playbackTime: radioClimat.formatTime(timeFromStart / 1000), 
             totalTrackTime: radioClimat.formatTime(duration / 1000),
             currentTrackID: data.all_music_id,
             playingProgress: (timeFromStart / duration) * 100,
+            canVote: false,
+
+            translations: {
+
+                ru: {
+                    already_voted: "Вы уже голосовали за этот трэк",
+                    likes: "За",
+                    dislikes: "Против",
+                },
+    
+            },
 
         }
+        
         return this.dataObj;
 
     }
+
+    vote = (up) => {
+
+        if (this.dataObj.data && this.dataObj.lastTrackAll_music_id) {
+
+            let url = `${this.SERVER}api/v2/music/${this.dataObj.lastTrackAll_music_id}/`;
+
+            url += up ? 'like/' : 'dislike/';
+
+           
+
+            this.sendData(url,{}).then(response => {
+
+                if (response) {
+                    this.dataObj.trackLikes = response.up;
+                    this.dataObj.trackDislikes = response.down;
+                }
+
+            })
+            .catch(e => {
+                
+                if (e){
+                    alert(this.dataObj.translations.ru.already_voted);
+                }
+                // console.log(e);
+                // if(e){
+                //     alert(this.dataObj.translations[this.dataObj.lang.ru].already_voted);
+                // }
+                // console.log(response);
+                // console.log(e.response);
+                // console.log(e.response.result);
+                // if (e.response && e.response.result === "already_voted" || e) {
+                //     alert(this.dataObj.translations[this.dataObj.lang.ru].already_voted);
+                // }
+            });
+
+        }
+    }
+
+    voteUp = () => {
+        this.vote(true);
+    }
+
+    
+
+    voteDown = () => {
+        this.vote(false);
+    }
+
 
     playListImg = (response) => {
 
     }
 
     dataTrack = (response) => {
-        // console.log(response);
         this.dataObj.albumName = response.album;
+        this.dataObj.trackLikes = response.human_up + response.auto_up;
+        this.dataObj.trackDislikes = response.human_down + response.auto_down;
     }
 
     getData = async (url) => {
@@ -64,8 +131,18 @@ class RadioClimat {
         }
     }
 
-    sendData = async (url, settings) => {
-        const res = await fetch();
+
+    sendData = async (url, data) => {
+        const res = await fetch(url, {
+            method: 'POST',
+            body: data,
+        });
+
+        if (res.ok) {
+            return await res.json();
+        } else {
+            throw new Error(`Не удалось получить данные по адресу ${url}`);
+        }
     }
 
     getWeekShchedule = () => {
@@ -88,20 +165,6 @@ class RadioClimat {
         return this.getData(`${this.SERVER}api/v2/history/?limit=1&offset=0&server=1`);
     }
 
-    // getPlayListImg = (id,name) => {
-
-    //     this.getAllMusic.then(response => {
-
-    //         console.log(response);
-
-    //     });
-
-    // }
-
-    // getNextDayTs = () => {
-    //    nextDayTs =  + (new Date()) + 86400;
-    //    return nextDayTs;
-    // }
 
     getSchedule = () => {
         return this.getData(`http://xn--80aalqalhjoq5a.xn--p1ai:8080/api/schedule/`);
@@ -139,6 +202,7 @@ class RadioClimat {
         return this.getData(`${this.SERVER}api/v2/music/${id}`);
     }
 
+
     refreshTrackdata = () => {
         this.getData(`${this.SERVER}api/v2/history/?limit=1&offset=0&server=1`)
             .then(response => {
@@ -146,7 +210,6 @@ class RadioClimat {
                     this.lastTrack = response.data.results[0];
                     this.loaded = true;
                     this.trackImage = (this.lastTrack.img_medium_url || this.lastTrack.img_url || this.trackImageFailover);
-                    // Track changed
                     if (this.trackMetadata != this.lastTrack.metadata) {
                         this.trackMetadata = this.lastTrack.metadata;
                         this.trackLikes = this.trackDislikes = 0;
@@ -184,10 +247,7 @@ class RadioClimat {
 
 const radioClimat = new RadioClimat();
 
-setInterval(() => {
-    radioClimat.getCurrent().then(response => radioClimat.data(response));
-    radioClimat.getCurrent().then(response => radioClimat.getTrackInfo(response.results[0].all_music_id)).then(response => radioClimat.dataTrack(response));
-}, 1000);
+
 
 
 const getPlayListsData = () => {
@@ -255,7 +315,7 @@ const getPlayListImg = (id,name) => {
 
     radioClimat.getAllMusic().then(response => {
 
-    console.log(response) ;
+    // console.log(response) ;
 
     });
 
@@ -308,9 +368,14 @@ console.log(radioClimat.getData(`${radioClimat.SERVER}/api/v2/grid`));
 
 
 const start = () => {
-
-    radioClimat.getCurrent().then(response => radioClimat.data(response)).then(()=>showPreloader());
-    radioClimat.getCurrent().then(response => radioClimat.getTrackInfo(response.results[0].all_music_id)).then(response => radioClimat.dataTrack(response));
+   
+    setInterval(() => {
+        radioClimat.getCurrent().then(response => radioClimat.data(response));
+        radioClimat.getCurrent().then(response => radioClimat.getTrackInfo(response.results[0].all_music_id)).then(response => radioClimat.dataTrack(response));
+    }, 1000);
+    
+    // radioClimat.getCurrent().then(response => radioClimat.data(response)).then(()=>showPreloader());
+    // radioClimat.getCurrent().then(response => radioClimat.getTrackInfo(response.results[0].all_music_id)).then(response => radioClimat.dataTrack(response));
 
     let radioPage = `
     <div class="page radio-page" >  
@@ -497,10 +562,11 @@ const start = () => {
    
                 <div class="player-buttons">
    
-                <div class="player-btn like--btn">
+                <div class="player-btn like--btn vote-btn" onclick="radioClimat.voteUp();">
                     <a href="#!" class="player-button__item like--btn__item ">
                         <img class="like--btn__icon player-button__icon" src="./src/images/like-lg.svg" alt="">
                     </a>
+                    <span class="vote-count like--vote-count">${radioClimat.dataObj.trackLikes}</span>
                 </div>
    
                 <div class="player-btn play--btn">
@@ -509,10 +575,11 @@ const start = () => {
                     </a>
                 </div>
              
-                <div class="player-btn  dislike--btn">
+                <div class="player-btn  dislike--btn vote-btn"  onclick="radioClimat.voteDown();">
                     <a href="#!" class="player-button__item  dislike--btn__item ">
                         <img class=" dislike--btn__icon player-button__icon" src="./src/images/dislike-lg.svg" alt="">
                     </a>
+                    <span class="vote-count dislike--vote-count">${radioClimat.dataObj.trackDislikes}</span>
                 </div>
    
                    
@@ -534,20 +601,18 @@ const start = () => {
 
     Player.radioPlay();
 
+
     setInterval(() => {
         Player.setSongNames(radioClimat.dataObj.songName, radioClimat.dataObj.groupName, radioClimat.dataObj.albumName);
         Player.setTimeProgress(radioClimat.dataObj.playbackTime, radioClimat.dataObj.totalTrackTime);
         Player.setBarProgress(radioClimat.dataObj.playingProgress);
+        Player.setVotes(radioClimat.dataObj.trackLikes, radioClimat.dataObj.trackDislikes);
     }, 1000);
-
-   
-
-
 
 Router.mobMenuInit();
 Router.init();
 Router.handlerInit();
-
+showPreloader();
 }
 
 const createRadioPage = () => {
@@ -754,22 +819,24 @@ const createRadioPage = () => {
        
                     <div class="player-buttons">
        
-                    <div class="player-btn like--btn">
-                        <a href="#!" class="player-button__item like--btn__item ">
+                    <div class="player-btn like--btn vote-btn" onclick="radioClimat.voteUp();">
+                        <a href="#!" class="player-button__item like--btn__item vote-btn" >
                             <img class="like--btn__icon player-button__icon" src="./src/images/like-lg.svg" alt="">
+                            <span class="vote-count like--vote-count">${radioClimat.dataObj.trackLikes}</span>
                         </a>
                     </div>
        
-                    <div class="player-btn play--btn">
+                    <div class="player-btn play--btn ">
                         <a href="#!" class="player-button__item  play--btn__item " id = "audioButtonPlay">
                             <img class="play--btn__icon player-button__icon" src="./src/images/play-lg.svg" alt="">
                         </a>
                     </div>
                  
-                    <div class="player-btn  dislike--btn">
+                    <div class="player-btn  dislike--btn vote-btn" onclick="radioClimat.voteDown();">
                         <a href="#!" class="player-button__item  dislike--btn__item ">
                             <img class=" dislike--btn__icon player-button__icon" src="./src/images/dislike-lg.svg" alt="">
                         </a>
+                        <span class="vote-count dislike--vote-count">${radioClimat.dataObj.trackDislikes}</span>
                     </div>
        
                        
@@ -807,7 +874,10 @@ const createRadioPage = () => {
     Router.handlerInit();
     // preloaderHide()
   
-
+    Player.setSongNames(radioClimat.dataObj.songName, radioClimat.dataObj.groupName, radioClimat.dataObj.albumName);
+    Player.setTimeProgress(radioClimat.dataObj.playbackTime, radioClimat.dataObj.totalTrackTime);
+    Player.setBarProgress(radioClimat.dataObj.playingProgress);
+    Player.setVotes(radioClimat.dataObj.trackLikes, radioClimat.dataObj.trackDislikes);
 };
 
 
@@ -1108,10 +1178,11 @@ const createMainPage = () => {
        
                 <div class="player-buttons">
        
-                    <div class="player-btn like--btn">
-                        <a href="#!" class="player-button__item like--btn__item ">
+                    <div class="player-btn like--btn vote-btn" onclick="radioClimat.voteUp();">
+                        <a href="#!" class="player-button__item like--btn__item vote-btn">
                             <img class="like--btn__icon player-button__icon" src="./src/images/like-sm.svg" alt="">
                         </a>
+                        <span class="vote-count like--vote-count">${radioClimat.dataObj.trackLikes}</span>
                     </div>
        
                     <div class="player-btn play--btn">
@@ -1120,10 +1191,11 @@ const createMainPage = () => {
                         </a>
                     </div>
        
-                    <div class="player-btn  dislike--btn">
+                    <div class="player-btn  dislike--btn vote-btn" onclick="radioClimat.voteDown();">
                         <a href="#!" class="player-button__item  dislike--btn__item ">
-                            <img class=" dislike--btn__icon player-button__icon" src="./src/images/dislike-sm.svg" alt="">
+                        <img class="dislike--btn__icon player-button__icon" src="./src/images/dislike-sm.svg" alt="">
                         </a>
+                        <span class="vote-count dislike--vote-count">${radioClimat.dataObj.trackDislikes}</span>
                     </div>
        
                        
@@ -1158,6 +1230,10 @@ const createMainPage = () => {
     Router.handlerInit();
 
   
+    Player.setSongNames(radioClimat.dataObj.songName, radioClimat.dataObj.groupName, radioClimat.dataObj.albumName);
+    Player.setTimeProgress(radioClimat.dataObj.playbackTime, radioClimat.dataObj.totalTrackTime);
+    Player.setBarProgress(radioClimat.dataObj.playingProgress);
+    Player.setVotes(radioClimat.dataObj.trackLikes, radioClimat.dataObj.trackDislikes);
 
   
 
@@ -1360,6 +1436,10 @@ const createPodcastsPage = () => {
 
     // preloaderHide();
 
+    Player.setSongNames(radioClimat.dataObj.songName, radioClimat.dataObj.groupName, radioClimat.dataObj.albumName);
+    Player.setTimeProgress(radioClimat.dataObj.playbackTime, radioClimat.dataObj.totalTrackTime);
+    Player.setBarProgress(radioClimat.dataObj.playingProgress);
+    Player.setVotes(radioClimat.dataObj.trackLikes, radioClimat.dataObj.trackDislikes);
 
 
 
@@ -1409,7 +1489,6 @@ const CreateOrderPage = () => {
     let efirBlock = document.querySelectorAll('.efirs');
 
     if (efirBlock[0]){
-        console.log(efirBlock[1]);
         while (efirBlock[0].firstChild) {
             efirBlock[0].removeChild(efirBlock[0].firstChild);
         }
@@ -1466,6 +1545,11 @@ const CreateOrderPage = () => {
 
     // preloaderHide();
 
+   
+        Player.setSongNames(radioClimat.dataObj.songName, radioClimat.dataObj.groupName, radioClimat.dataObj.albumName);
+        Player.setTimeProgress(radioClimat.dataObj.playbackTime, radioClimat.dataObj.totalTrackTime);
+        Player.setBarProgress(radioClimat.dataObj.playingProgress);
+        Player.setVotes(radioClimat.dataObj.trackLikes, radioClimat.dataObj.trackDislikes);
 
 };
 
@@ -1474,7 +1558,6 @@ const CreateOrderPage = () => {
 
 // `класс` роутера
 let Router = {
-
 
     // маршруты и соответствующие им обработчики
     routes: {
@@ -1536,8 +1619,6 @@ let Router = {
 
 
     },
-
-
 
     replay: function () {
         Router.init();
@@ -1661,7 +1742,6 @@ let Router = {
     // обработчик
     // главной страницы
     start: function () {
-      
         start();
     },
 
@@ -1690,6 +1770,7 @@ let Router = {
 
 
 let Player = {
+    
 
     setSongNames: function (songName, groupName, albumName) {
 
@@ -1733,6 +1814,14 @@ let Player = {
 
         audioProgressTiming.style.width = `${trackProgress}px`;
 
+    },
+
+    setVotes: function (like, dislike){
+        let likeBlock = document.querySelector(".like--vote-count");
+        let DislikeBlock = document.querySelector(".dislike--vote-count");
+
+        likeBlock.textContent = like;
+        DislikeBlock.textContent= dislike;
     },
 
     refresh: function () {
