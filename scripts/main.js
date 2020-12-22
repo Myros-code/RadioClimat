@@ -7,8 +7,11 @@
 // const search = document.querySelector(".search-input");
 
 // // Variables for navigation on page
-Router.init();
-Router.dispatch('/radio');
+
+
+
+
+
 // let navBtns = document.querySelectorAll(".sidebar-nav__item");
 // let page = document.querySelector(".page");
 // let sidebar = document.querySelector(".sidebar");

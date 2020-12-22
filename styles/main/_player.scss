@@ -121,7 +121,13 @@
         }
         .play--btn{
             margin: 0 11px;
+            max-width: 64px;
+            max-height: 64px;
 
+        }
+        .play--btn__icon{ 
+            max-width: 64px;
+            max-height: 64px;
         }
         .progres{
             margin-top: 17px;
@@ -166,7 +172,7 @@
                 content: "";
                 left: -41px;
                 bottom: 2px;
-                background-image:url("../src/new_images/volume-wh.svg") ;
+                background-image:url("../../src/images/volume-wh.svg");
                 width: 24px;
                 height: 20px;
                 position: absolute;

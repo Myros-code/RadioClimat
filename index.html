@@ -13,22 +13,22 @@
 
  <div class="app">
     <audio class="audio-player" id = "audioPlayer" src=""></audio>
- 
 
  </div>
 
+ <div id="hellopreloader">
+    <div id="hellopreloader_preload">
+    </div>
+</div>
 
 
-
-
-    <div class="mob-menu">
-
+<div class="mob-menu">
         <div class="mob-menu__inner">
 
             <nav class="mob-menu__nav">
                 <div class="wrapper">
                     <div class="nav-item__wrap">
-                        <a href="#!" class="mob-menu__nav-item" href="/radio">
+                        <a href="/radio" class="mob-menu__nav-item">
                             <figure class="nav__item-figure">
                                 <img class="mob-menu__nav-img mob-menu__nav--radio-img" src="./src/images/radio-mobile.svg" alt="">
                                 <figcaption class="nav__item-figcaption">Радио</figcaption>
@@ -38,7 +38,7 @@
 
 
                     <div class="nav-item__wrap">
-                        <a href="#!" class="mob-menu__nav-item">
+                        <a href="/main/order" class="mob-menu__nav-item">
                             <figure class="nav__item-figure">
                                 <img class="mob-menu__nav-img mob-menu__nav--headphones-img" src="./src/images/headphones-mobile.svg" alt="">
                                 <figcaption class="nav__item-figcaption">Заказать</figcaption>
@@ -46,8 +46,8 @@
                         </a>
                     </div>
 
-                    <div class="nav-item__wrap">
-                        <a href="#!" class="mob-menu__nav-item">
+                    <div class="nav-item__wrap" >
+                        <a href="/main" class="mob-menu__nav-item">
                             <figure class="nav__item-figure">
                                 <img class="mob-menu__nav-img mob-menu__nav--micro-img" src="./src/images/micro-mobile.svg" alt="">
                                 <figcaption class="nav__item-figcaption">Подкасты</figcaption>
@@ -101,11 +101,23 @@
             </div>
 
         </div>
-    </div>
+</div>
 
 
-    <script src="./scripts/Router.js"></script>
-    <script src="./scripts/main.js"></script>
+    <script src="./scripts/ModModRouter.js"></script>
+    
+    <script>
+
+        Router.init();
+        // запускаем главную страницу
+        Router.dispatch('/');
+        Router.handlerInit();
+
+    </script>
+    <!-- <script src="./scripts/obfus.js"></script> -->
+    <!-- <script src="./scripts/main.js"></script> -->
+
+    <!-- <script src="./scripts/orderSong.js"></script> -->
 </body>
 </html>
 

@@ -116,6 +116,9 @@
   .main-page .main-content .styling-block {
     left: 19px;
   }
+  .main-page .order--center-content-page {
+    height: 68vh;
+  }
   .main-page .center-content {
     width: 100vw;
     padding: 0 20px;

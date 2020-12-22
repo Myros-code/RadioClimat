@@ -1,5 +1,6 @@
-// import {mobMenuInit} from './mobMenu.js';
-
+ 
+ 
+ 
 const app = document.querySelector(".app");
 const centerContentBody = document.querySelector('.center-content-body');
 const audioPlayer = document.querySelector('#audioPlayer');
@@ -1564,6 +1565,15 @@ audioPlayer.src = "http://xn--80aalqalhjoq5a.xn--p1ai:8000/stream";
 
 </div>`;
 
+let testRadio = ` 
+
+<a href="/main" class="sidebar-nav__item">main</a>
+
+`;
+
+let testMain = `
+<a href="/radio"  data-page="radio">radio</a>
+`;
 
 
 class RadioClimat {
@@ -1572,56 +1582,56 @@ class RadioClimat {
         this.SERVER = 'http://xn--80aalqalhjoq5a.xn--p1ai:8080/';
     }
 
-    data = () => {
-        return {
-            translations: {
-                en: {
-                    already_voted: "You have already voted for this track",
-                    likes: "Likes",
-                    dislikes: "Dislikes",
-                },
-                ru: {
-                    already_voted: "Вы уже голосовали за этот трэк",
-                    likes: "За",
-                    dislikes: "Против",
-                },
-                fr:{
-                    already_voted: "Vous avez déjà voté pour ce titre",
-                    likes: "J'Aime",
-                    dislikes: "J'Aime pas",
-                }
-            },
-            loaded: true,
-            trackImage: '',
-            trackImageFailover: '',
-            trackMetadata: '',
-            showProgress: false,
-            playbackTime: '',
-            pbbStyle: {
-                left: '0px',
-            },
-            voteResultNeg: {
-                color: null,
-                'font-size': '12px',
-                'line-height': '50px',
-            },
-            voteResultPos: {
-                color: null,
-                'font-size': '12px',
-                'line-height': '50px',
-            },
-            totalTrackTime: '',
-            // Voting
-            canVote: false,
-            trackLikes: 0,
-            trackDislikes: 0,
-            voteRowHeight: 50,
-            styleObject: {
-            }
+    // data = () => {
+    //     return {
+    //         translations: {
+    //             en: {
+    //                 already_voted: "You have already voted for this track",
+    //                 likes: "Likes",
+    //                 dislikes: "Dislikes",
+    //             },
+    //             ru: {
+    //                 already_voted: "Вы уже голосовали за этот трэк",
+    //                 likes: "За",
+    //                 dislikes: "Против",
+    //             },
+    //             fr:{
+    //                 already_voted: "Vous avez déjà voté pour ce titre",
+    //                 likes: "J'Aime",
+    //                 dislikes: "J'Aime pas",
+    //             }
+    //         },
+    //         loaded: true,
+    //         trackImage: '',
+    //         trackImageFailover: '',
+    //         trackMetadata: '',
+    //         showProgress: false,
+    //         playbackTime: '',
+    //         pbbStyle: {
+    //             left: '0px',
+    //         },
+    //         voteResultNeg: {
+    //             color: null,
+    //             'font-size': '12px',
+    //             'line-height': '50px',
+    //         },
+    //         voteResultPos: {
+    //             color: null,
+    //             'font-size': '12px',
+    //             'line-height': '50px',
+    //         },
+    //         totalTrackTime: '',
+    //         // Voting
+    //         canVote: false,
+    //         trackLikes: 0,
+    //         trackDislikes: 0,
+    //         voteRowHeight: 50,
+    //         styleObject: {
+    //         }
 
-        } 
+    //     } 
         
-    }
+    // }
 
     getData = async (url) => {
         
@@ -1644,6 +1654,7 @@ class RadioClimat {
     getCurrent = () => {return this.getData(`${this.SERVER}api/v2/history/?limit=1&offset=0&server=1`);}
 
    
+
     
     getEfirHistory = () =>{return this.getData(`${this.SERVER}/api/v2/history/`);}
 
@@ -1681,6 +1692,7 @@ class RadioClimat {
         let pad = function(n) {
             return (n < 10 ? "0" + n : n);
         };
+
         sec = parseInt(sec);
         let h = Math.floor(sec / 3600),
             m = Math.floor((sec / 3600) % 1 * 60),
@@ -1693,145 +1705,98 @@ class RadioClimat {
         }
     }
     
-   
-    // let url = `${this.apiBase}/music/${this.lastTrack.all_music_id}/`;
-    
-}
+};
+
 
 
 
 
 const radioClimat = new RadioClimat();
 
-setInterval(() => {
-    radioClimat.getEfirHistory().then((response) => CreateEfir(response));
-}, 100);
 
 
+ const createRadioTestPage = () => {
 
-const CreateEfir = (response) => {
-    
-    const currentTrackNum = 0;
-    const currentTrackData = response[currentTrackNum];
-    currentTrackID = response[currentTrackNum].all_music_id;
-    group = response[currentTrackNum].playlist_title;
+    if(app.firstChild.nextSibling.classList.contains("radio-page")){
 
+            
+    } else {
 
-    radioClimat.getTrack(currentTrackID).then((response) => {
+        let testRadio = ` 
 
-        let songName = response.title;
-        let albumName = response.album;
-        let groupName = group;
+        <a href="/main" class="sidebar-nav__item">main</a>
+        
+        `;
 
-        let duration = response.length;
+        app.innerHTML = testRadio;
 
-        Player.setSongNames(songName, groupName, albumName);
-    
-    });
+        Router.init();
+        Router.handlerInit();
 
-   
-    let timeFromStart = (+ new Date()) - response[currentTrackNum].ts;
-
-    if (timeFromStart > response[currentTrackNum].length) {
-        timeFromStart = response[currentTrackNum].length;
     }
 
-    let playbackTime = radioClimat.formatTime(timeFromStart / 1000);
-    let totalTrackTime = radioClimat.formatTime(response[currentTrackNum].length / 1000);
+ }
 
-    Player.setTimeProgress(playbackTime, totalTrackTime);
 
-    let playingProgress = (timeFromStart / response[currentTrackNum].length) * 100;
 
-    Player.setBarProgress(playingProgress);
+ 
+ const createMainTestPage = () => {
 
+    if(app.firstChild.nextSibling.classList.contains("main-page")){
+
+    } else {
+        let testMain = `
+        <a href="/radio"  data-page="radio">radio</a>
+        `;
+        
+        app.innerHTML = testMain;
+
+    }
+    Router.init();
+    Router.handlerInit();
 
     
-
-}
-
-
-const createShchedule = (response) => {}
-
-
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  // `класс` роутера
  let Router = {
 
-
-     // маршруты и соответствующие им обработчики
-     routes: {
+    // маршруты и соответствующие им обработчики
+    routes: {
         "/radio": "radio",
         "/main": "main",
-        "/main/order": "main_order",
-        "/main/feeds/": "main_feeds",
-        "/main/schedule": "main_shchedule",
-        "/main/podcasts/": "main_podcasts",
-    },
-
-    mobMenuInit: function(){
-        const mobMenuToggleBtn = document.querySelector("#mobMenuToggle");
-        const mobMenuToggleImg = document.querySelector("#mobMenuToggleImg");
-        const mobMenu = document.querySelector(".mob-menu");
-        const search = document.querySelector(".search-input");
-
-        mobMenuToggleBtn.addEventListener("click", () => {
-
-            if(mobMenu.style.top == "83px"){ 
-
-                mobMenuToggleImg.src = "../src/images/mobMenuOn.svg";
-                search.style.opacity = "1";
-                search.style.visibility = "visible";
-                mobMenu.style.top = "-800px";
-
-            } else{
-
-                mobMenuToggleImg.src = "../src/images/mobMenuOff.svg";
-                search.style.opacity = "0";
-                search.style.visibility = "hidden";
-                mobMenu.style.top = "83px";
-            
-            }
-
-        });
-    },
-
-    createPage: function(where, what){
-        where.innerHTML = '';
-        where.innerHTML = what;
-
-    },
-
-
-    replay: function () {
-
-            // инициализируем роутер
-            // Router.init();
-               
-            // запускаем главную страницу
-            // Router.dispatch('/radio');
-        
-            // обработчик нажатий на ссылки
-            let handler = event =>  {
-               
-                // получаем запрошенный url
-                let url = new URL(event.currentTarget.href);
-
-            
-                // запускаем роутер, предавая ему path
-                Router.dispatch(url.pathname);
-               
-                // запрещаем дальнейший переход по ссылке
-                event.preventDefault();
-                // window.history.pushState(1, url.pathname,[url]);
-                // console.log(window.history.state);
-            }
-        
-            // получаем все ссылки на странице
-            let anchors = document.querySelectorAll('a');
-           
-            // вешаем на событие onclick обработчик
-            for( let anchor of anchors ) anchor.onclick = handler;
-        
     },
 
 
@@ -1863,6 +1828,59 @@ const createShchedule = (response) => {}
         }
 
     },
+
+    replay: function(){
+                
+ // инициализируем роутер
+      Router.init();
+       
+      // запускаем главную страницу
+      Router.dispatch('/radio');
+     
+      
+      // обработчик нажатий на ссылки
+      let handler = event =>  {
+         
+          // получаем запрошенный url
+          let url = new URL(event.currentTarget.href);
+         
+          // запускаем роутер, предавая ему path
+          Router.dispatch(url.pathname);
+         
+          // запрещаем дальнейший переход по ссылке
+          event.preventDefault();
+      }
+     
+      // получаем все ссылки на странице
+      let anchors = document.querySelectorAll('a');
+     
+      // вешаем на событие onclick обработчик
+      for( let anchor of anchors ) anchor.onclick = handler;
+     
+
+    },
+
+    handlerInit: function(){
+        let handler = event =>  {
+         
+            // получаем запрошенный url
+            let url = new URL(event.currentTarget.href);
+           
+            // запускаем роутер, предавая ему path
+            Router.dispatch(url.pathname);
+           
+            // запрещаем дальнейший переход по ссылке
+            event.preventDefault();
+        }
+       
+        // получаем все ссылки на странице
+        let anchors = document.querySelectorAll('a');
+        console.log(anchors);
+       
+        // вешаем на событие onclick обработчик
+        for( let anchor of anchors ) anchor.onclick = handler;
+
+    },
    
    
    
@@ -1891,188 +1909,29 @@ const createShchedule = (response) => {}
 
     // обработчик
     // главной страницы
-
     radio: function() {
-        
-        this.createPage(app,radioPage);
         this.init();
-        this.replay();
-        radioClimat.getEfirHistory().then((response) => CreateEfir(response));
-        console.log( radioClimat.getEfirHistory().then((response) => CreateEfir(response)));
-        this.mobMenuInit();
-        Player.radioPlay();
+        this.handlerInit();
+        radioClimat.getCurrent().then(response => createRadioTestPage());
+
+        this.init();
+        this.handlerInit();
+        console.log('radio');
 
     },
 
 
     // контроллер статей
     main: function() {
-        this.createPage(app,mainPage)
+        console.log('main');
         this.init();
-        this.replay();
-        radioClimat.getEfirHistory().then((response) => CreateEfir(response));
-        // console.log( radioClimat.getEfirHistory().then((response) => CreateEfir(response)));
-        this.mobMenuInit();
-        Player.radioPlay();
+        radioClimat.getCurrent().then(response => createMainTestPage());
+        this.init();
+        this.handlerInit();
     },
    
    
     // контроллер блога компаний
-
-
   
 
-    main_order: function () {
-        
-
-        
-
-        if(app.firstChild.nextSibling.classList.contains("radio-page")){
-        let centerContentBody = document.querySelector('.center-content-body');
-        this.main();
-            
-        }
-
-        let centerContentBody = document.querySelector('.center-content-body');
-        this.createPage(centerContentBody,order);
-
-        orderCheck();
-        // console.log(orderCheck());
-
-    },
-
-    main_shchedule: function () {
-
-        let centerContentBody = document.querySelector('.center-content-body');
-
-        if(app.firstChild.nextSibling.classList.contains("radio-page")){
-            Router.main();
-        }
-        else{
-            this.createPage(centerContentBody,order);
-        }
-
-    },
-
-};
-
-
-
-
-let Player = {
-   
-    setSongNames: function(songName,groupName,albumName){
-
-        const songNameField = document.querySelector('#songName');
-        const groupNameField = document.querySelector('#groupName');
-        const albumNameField = document.querySelector('#albomName');
-
-        songNameField.textContent = songName;
-        groupNameField.textContent = groupName;
-        albumNameField.textContent = albumName;
-
-    },
-
-    setTimeProgress: function(passed, total){
-
-        const audioTimePassed =  document.querySelector('#currentTime');//
-        const audioTimeTotal =  document.querySelector('#durationTime');//
-
-        audioTimePassed.textContent = passed;
-        audioTimeTotal.textContent = total;
-
-    },
-
-
-    setBarProgress: function(playingProgress){
-
-        let progressWrap = document.querySelector('.progres');
-        let audioProgressTiming = document.querySelector('#audioProgress');//
-
-        if (playingProgress >= 100) {
-            radioClimat.refreshTrackdata();
-        }
-    
-        if (!progressWrap) {
-            return;
-        }
-    
-        let progressWidth = progressWrap.offsetWidth;
-        let barWidth = 100 - playingProgress;
-        let pixWidth = progressWidth * (barWidth / 100.);
-        let trackProgress = progressWidth - pixWidth;
-    
-        audioProgressTiming.style.width = `${trackProgress}px`;
-
-    },
-
-    refresh: function(){
-        this.setSongNames(songName,groupName,albumName);
-        this.setSongNames(passed, total);
-        this.setSongNames(playingProgress);
-    },
-
-
-    radioPlay: function(){
-        
-    const audioButtonPlayImg = document.querySelector('.play--btn__icon');
-    const audioButtonPlay = document.querySelector('#audioButtonPlay');//
-
-    const volume = document.querySelector('#volume');
-
-    if (volume){
-        volume.addEventListener('change', (elem)=> {
-            console.log(elem.target);
-            console.log(elem.target.value);
-
-            audioPlayer.volume = elem.target.value;
-        });
-
-        // volume.onchange(){
-
-        // }
-    }
-
-    
-
-    this.checkPlay(audioButtonPlayImg, audioButtonPlay);
-       
-    audioButtonPlay.addEventListener('click', () =>{
-
-            radioClimat.refreshTrackdata();
-
-            const isPlayed = audioPlayer.paused;
-
-            if (isPlayed){
-            
-            audioPlayer.play();
-            audioButtonPlayImg.src = './src/images/pause.svg';
-
-            } else {
-
-            audioPlayer.pause();
-            audioButtonPlayImg.src = './src/images/play-lg.svg';
-
-            }
-
-    });
-    
-},
-
-    
-    checkPlay: function(audioButtonPlayImg, audioButtonPlay){
-
-        if (!audioPlayer.paused){
-            audioButtonPlayImg.src = './src/images/pause.svg';
-        }
-
-        else {
-            audioButtonPlayImg.src = './src/images/play-lg.svg';
-        }
-
-    },
-
-
-
-};
-
+}
